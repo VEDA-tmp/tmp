@@ -21,6 +21,7 @@ set(SOURCE
     src/main.cpp
     src/heatmap_generator.cpp
     src/tvm_wrapper.cpp
+    src/tracker.cpp
 )
 
 add_executable(tvm_tutorial ${SOURCE})

@@ -129,3 +129,55 @@ void TVMWrapper::detect() {
     cap.release();
     cv::destroyAllWindows();
 }
+
+
+void TVMWrapper::detect_video(const std::string video_path) {
+    LOG(INFO) << this->model_name + " Model Setup...";
+    
+    tvm::runtime::PackedFunc set_input = mod.GetFunction("set_input");
+    tvm::runtime::PackedFunc run = mod.GetFunction("run");
+    tvm::runtime::PackedFunc get_output = mod.GetFunction("get_output");
+
+    cv::VideoCapture cap(video_path);
+    if (!cap.isOpened()) {
+        std::cerr << "Error: Could not open video file." << std::endl;
+        return;
+    }
+
+    int model_input_width = 640;
+    int model_input_height = 640;
+
+    cv::Mat frame, resized_frame;
+ 
+    int frame_skip = 2;  
+    int frame_count = 0;
+
+    while (true) {
+        cap >> frame;
+        if (frame.empty()) {
+            std::cerr << "End of video file or error." << std::endl;
+            break;
+        }
+        frame_count++;
+        if (frame_count % frame_skip != 0) {
+            continue; 
+        }
+        if (frame.cols != model_input_width || frame.rows != model_input_height) {
+            cv::resize(frame, resized_frame, cv::Size(model_input_width, model_input_height));
+        } else {
+            resized_frame = frame;  
+        }
+        tvm::runtime::NDArray input = preprocess_frame(resized_frame, 1, model_input_width, model_input_height);
+        set_input("input", input);
+        run();
+        tvm::runtime::NDArray output = get_output(0);
+        ProcessYOLOOutput(output, model_input_width, model_input_height, COCO_CLASS, resized_frame, 0.45);
+        cv::imshow(this->model_name, resized_frame);
+        if (cv::waitKey(1) == 27) {
+            break;
+        }
+    }
+
+    cap.release();
+    cv::destroyAllWindows();
+}
