@@ -9,6 +9,8 @@
 #include <tvm/runtime/ndarray.h>
 #include <opencv2/opencv.hpp>
 
+#include "tracker.h"
+
 
 // 예시 코코 데이터 셋 설정
 const static std::vector<std::string> COCO_CLASS = {
@@ -40,6 +42,7 @@ class TVMWrapper {
         };
 
         void detect();
+        void detect_video(const std::string video_path);
         tvm::runtime::NDArray preprocess_frame(cv::Mat& frame,int _batch, int _input_w, int _input_h);
 
     private:
