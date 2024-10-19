@@ -4,9 +4,6 @@
 #include <chrono>
 #include <iostream>
 
-
-//시간을 측정할 수 있도록 하는 클래스입니다,
-//클래스를 호출하고 out of scope가 되면 자동으로 시간을 측정할 수 있도록 했습니다.
 class Timer {
     public:
         Timer() : m_start(std::chrono::high_resolution_clock::now()) {}

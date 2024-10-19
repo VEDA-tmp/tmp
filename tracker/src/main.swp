@@ -1,0 +1,36 @@
+#include <opencv2/opencv.hpp>
+#include <thread>
+#include <atomic>
+#include "tvm_wrapper.h"
+
+// 전역 플래그로 감지 중단 여부를 관리
+std::atomic<bool> stop_requested(false);
+
+void detect_video_thread(TVMWrapper& tw, const std::string& video_path) {
+    // 백그라운드 스레드에서 detect_video 호출
+    while (!stop_requested) {
+        tw.detect_video(video_path);
+    }
+}
+
+void keyboardListener() {
+    char input;
+    while (!stop_requested) {
+        std::cin >> input;
+        if (input == 'q') {
+            stop_requested = true;
+        }
+    }
+}
+
+int main() {
+    const std::string model_path = "/Users/gyujinkim/Desktop/Ai/TVM_TUTORIAL/front/yolov5_arm.so";
+    const std::string video_path = "/Users/gyujinkim/Desktop/Ai/TVM_TUTORIAL/device/classRoom.mp4";
+
+    TVMWrapper tw(model_path, "yolov5");
+
+    // 키보드 입력을 감지하는 스레드 시작
+    tw.detect_video(video_path);
+
+    return 0;
+}
