@@ -1,0 +1,26 @@
+cmake_minimum_required(VERSION 3.10)
+project(MyQtProject)
+
+find_package(Qt6 REQUIRED COMPONENTS Widgets)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+
+# 소스 파일 목록
+set(SRCS
+    main.cpp
+    MainWindowLayout.cpp
+    LoginWindowLayout.cpp
+)
+
+# include 디렉토리 설정
+include_directories(${PROJECT_SOURCE_DIR})
+
+add_executable(MyQtProject ${SRCS})
+
+# Link Qt6 libraries
+target_link_libraries(MyQtProject
+    Qt6::Widgets
+)
