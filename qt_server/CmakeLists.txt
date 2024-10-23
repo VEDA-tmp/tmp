@@ -1,0 +1,34 @@
+cmake_minimum_required(VERSION 3.10)
+project(QtServer)
+
+find_package(Qt6 REQUIRED COMPONENTS Widgets Sql Network WebSockets)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+
+# 소스 파일 목록
+set(SRCS
+    auth.h
+    auth.cpp
+    chat.h
+    chat.cpp
+    main.cpp
+    logmodel.h
+    logviewer_controller.h
+    logviewer_view.h
+)
+
+# include 디렉토리 설정
+include_directories(${PROJECT_SOURCE_DIR})
+
+add_executable(QtServer ${SRCS})
+
+# Link Qt6 libraries
+target_link_libraries(QtServer
+    Qt6::Widgets
+    Qt6::Sql
+    Qt6::Network
+    Qt6::WebSockets
+)
