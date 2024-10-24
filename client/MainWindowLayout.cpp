@@ -2,6 +2,7 @@
 
 MainWindow::MainWindow(QWidget *parent) : QWidget(parent) {
     // 왼쪽 프레임 버퍼 (여기서는 QLabel로 대체)
+    mainWidget = new QWidget(this);
     QLabel *frameBufferLabel = new QLabel("Frame Buffer Area");
     frameBufferLabel->setStyleSheet("background-color: black; color: white;"); // 배경색을 검정으로
 

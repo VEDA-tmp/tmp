@@ -1,4 +1,4 @@
-#include "Chat.h"
+#include "chat.h"
 
 Chat::Chat(QObject *parent) : QObject(parent) {
     server = new QWebSocketServer(QStringLiteral("Chat Server"), QWebSocketServer::NonSecureMode, this);

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 project(MyQtProject)
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Widgets Network)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_AUTOMOC ON)
@@ -23,4 +23,5 @@ add_executable(MyQtProject ${SRCS})
 # Link Qt6 libraries
 target_link_libraries(MyQtProject
     Qt6::Widgets
+    Qt6::Network
 )

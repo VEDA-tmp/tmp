@@ -40,18 +40,16 @@ public:
 
         // Log File List (Left panel)
         QHBoxLayout* mainContentLayout = new QHBoxLayout();
-        QListWidget* menuList = new QListWidget();
+        menuList = new QListWidget();
 
-        // 메뉴 항목 추가
-        menuList->addItem("User");
+        // 메뉴 항목 추가 (전체 및 특정 환경)
+        menuList->addItem("All Logs");
+        menuList->addItem("Auth");
         menuList->addItem("Chat");
         menuList->addItem("Image");
 
         // QListWidget을 메인 레이아웃에 추가
         mainContentLayout->addWidget(menuList, 1);
-
-        
-        
 
         // Log Entries Table (Right panel)
         logTableView = new QTableView();
@@ -63,23 +61,37 @@ public:
 
         mainLayout->addLayout(mainContentLayout);
 
-        // Footer
-        // QHBoxLayout* footerLayout = new QHBoxLayout();
-        // QLabel* memoryLabel = new QLabel("Memory: 6.00 MB");
-        // QLabel* durationLabel = new QLabel("Duration: 80ms");
-        // QLabel* versionLabel = new QLabel("Version: v2.1.0");
-
-        // footerLayout->addWidget(memoryLabel);
-        // footerLayout->addWidget(durationLabel);
-        // footerLayout->addStretch(); // Spacer
-        // footerLayout->addWidget(versionLabel);
-        // mainLayout->addLayout(footerLayout);
+        // 메뉴 선택 시 로그 필터링 처리
+        connect(menuList, &QListWidget::itemClicked, this, &LogViewerView::onMenuItemClicked);
     }
 
     void setModel(LogModel* model) {
         logTableView->setModel(model);
+        this->model = model;
+        qDebug() << "setModel Activated..";
     }
+
+    void updateTableView() {
+        model->loadAllLogs();
+        logTableView->viewport()->update();  // 뷰포트 업데이트 (갱신)
+    }
+
+private slots:
+    // 메뉴 항목이 클릭되었을 때 처리하는 슬롯
+    void onMenuItemClicked(QListWidgetItem* item) {
+        QString selectedEnv = item->text();
+
+        if (selectedEnv == "All Logs") {
+            model->loadAllLogs();  // 전체 로그 불러오기
+        } else {
+            model->loadLogsByEnv(selectedEnv.toLower());  // 선택한 환경에 따른 로그 필터링
+        }
+    }
+
+    
 
 private:
     QTableView* logTableView;
+    QListWidget* menuList;
+    LogModel* model;
 };

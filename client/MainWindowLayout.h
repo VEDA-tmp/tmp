@@ -9,12 +9,17 @@
 #include <QVBoxLayout>
 #include <QMessageBox>
 #include <QKeyEvent>
+#include <QStackedWidget>
 
 class MainWindow : public QWidget {
     Q_OBJECT  // Qt 메타 시스템을 위한 매크로
 
 public:
     MainWindow(QWidget *parent = nullptr);
+    void switchToMainWindowLayout() {
+        // MainWindowLayout으로 전환하는 로직
+        stackedWidget->setCurrentWidget(mainWidget);
+    }
     
 
 protected:
@@ -26,6 +31,8 @@ private slots:
 private:
     QTextEdit *chatArea;
     QTextEdit *chatInput;
+    QStackedWidget *stackedWidget;
+    QWidget *mainWidget;
 };
 
 #endif // MAINWINDOW_H

@@ -1,3 +1,4 @@
+#pragma once
 #include <QObject>
 #include <QWebSocketServer>
 #include <QWebSocket>

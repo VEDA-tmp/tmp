@@ -14,10 +14,17 @@ set(SRCS
     auth.cpp
     chat.h
     chat.cpp
+    database.h
+    database.cpp
     main.cpp
     logmodel.h
     logviewer_controller.h
     logviewer_view.h
+    route.cpp
+    route.h
+    server.cpp
+    server.h
+    utils.h
 )
 
 # include 디렉토리 설정
