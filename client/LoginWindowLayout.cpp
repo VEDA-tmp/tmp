@@ -12,6 +12,7 @@ void LoginWindow::setupUI() {
     stackedWidget->setFixedSize(350, 500);
     stackedWidget->addWidget(loginWidget);
     stackedWidget->addWidget(signupWidget);
+    stackedWidget->addWidget(mainWindow);
 
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
     mainLayout->addWidget(stackedWidget);
@@ -64,7 +65,6 @@ void LoginWindow::setupLoginUI() {
     loginLayout->addSpacing(20);
     loginLayout->addWidget(signupButton);
     loginLayout->addWidget(forgotPasswordLabel, 0, Qt::AlignCenter);
-
     loginWidget->setLayout(loginLayout);
 }
 
@@ -130,7 +130,6 @@ void LoginWindow::setupSignupUI() {
     signupEmailInput->setStyleSheet("color: white; background-color: #2E3B4E; border: none; border-bottom: 1px solid #4CAF50; padding: 10px;");
     signupEmailInput->setFixedHeight(40);
 
-
     // 사용자명 입력 필드
     signupUsernameInput = new QLineEdit(this);
     signupUsernameInput->setPlaceholderText("User name");
@@ -164,7 +163,6 @@ void LoginWindow::setupSignupUI() {
     signupLayout->addWidget(signupConfirmButton);
     signupLayout->addSpacing(10);
     signupLayout->addWidget(loginLinkButton);
-
     signupWidget->setLayout(signupLayout);
 }
 
@@ -182,7 +180,7 @@ void LoginWindow::switchToSignup() {
 }
 
 void LoginWindow::switchToMain() {
-    mainWindow->switchToMainWindowLayout();
+    this->switchToMainWindowLayout();
 }
 
 void LoginWindow::onLoginButtonClicked() {

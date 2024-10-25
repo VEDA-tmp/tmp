@@ -16,12 +16,7 @@ class MainWindow : public QWidget {
 
 public:
     MainWindow(QWidget *parent = nullptr);
-    void switchToMainWindowLayout() {
-        // MainWindowLayout으로 전환하는 로직
-        stackedWidget->setCurrentWidget(mainWidget);
-    }
     
-
 protected:
     void keyPressEvent(QKeyEvent *event) override;
 

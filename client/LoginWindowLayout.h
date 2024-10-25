@@ -24,7 +24,7 @@ public:
         : QWidget(parent), mainWindow(mainWindow) {
         setupUI();
 
-    // 네트워크 매니저 초기화
+        // 네트워크 매니저 초기화
         networkManager = new QNetworkAccessManager(this);
 
         // 로그인 버튼 클릭 시 로그인 요청 전송
@@ -58,6 +58,9 @@ private:
     void setupUI();
     void setupLoginUI();
     void setupSignupUI();
+    void switchToMainWindowLayout() {
+        stackedWidget->setCurrentWidget(mainWindow);
+    }
     
 
 private slots:
